@@ -1,26 +1,21 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAuthInput } from './dto/create-auth.input';
-import { UpdateAuthInput } from './dto/update-auth.input';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { SignInInput } from './dto/signin.input';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { verify } from 'argon2';
 
 @Injectable()
 export class AuthService {
-  create(createAuthInput: CreateAuthInput) {
-    return 'This action adds a new auth';
-  }
-
-  findAll() {
-    return `This action returns all auth`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
-
-  update(id: number, updateAuthInput: UpdateAuthInput) {
-    return `This action updates a #${id} auth`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
+  constructor(private readonly prisma: PrismaService) {}
+  async validateLocalUser({ email, password }: SignInInput) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+    if (!user) throw new UnauthorizedException('User not found');
+    const passwordMatched = await verify(user.password, password);
+    if (!passwordMatched)
+      throw new UnauthorizedException('Invalid credentials');
+    return user;
   }
 }

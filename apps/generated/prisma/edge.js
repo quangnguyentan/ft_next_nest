@@ -163,7 +163,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\ft_next_nest\\apps\\generated\\prisma",
+      "value": "C:\\ft_next_nest\\apps\\server\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -182,9 +182,9 @@ const config = {
   },
   "relativeEnvPaths": {
     "rootEnvPath": null,
-    "schemaEnvPath": "../../server/.env"
+    "schemaEnvPath": "../../.env"
   },
-  "relativePath": "../../server/prisma",
+  "relativePath": "../../prisma",
   "clientVersion": "6.10.1",
   "engineVersion": "9b628578b3b7cae625e8c927178f15a170e74a9c",
   "datasourceNames": [
@@ -200,8 +200,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id        Int       @id @default(autoincrement())\n  name      String\n  email     String\n  bio       String?\n  avatar    String?\n  password  String?\n  createAt  DateTime  @default(now())\n  updatedAt DateTime  @updatedAt\n  posts     Post[]\n  comments  Comment[]\n  likes     Like[]\n}\n\nmodel Post {\n  id        Int       @id @default(autoincrement())\n  title     String\n  slug      String?   @unique\n  content   String\n  authorId  Int\n  thumbnail String?\n  published Boolean   @default(false)\n  createdAt DateTime  @default(now())\n  updatedAt DateTime  @updatedAt\n  author    User      @relation(fields: [authorId], references: [id])\n  comments  Comment[]\n  tags      Tag[]     @relation(\"PostTags\")\n  likes     Like[]\n}\n\nmodel Comment {\n  id        Int      @id @default(autoincrement())\n  content   String\n  authorId  Int\n  postId    Int\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  author    User     @relation(fields: [authorId], references: [id])\n  post      Post     @relation(fields: [postId], references: [id])\n}\n\nmodel Tag {\n  id    Int    @id @default(autoincrement())\n  name  String @unique\n  posts Post[] @relation(\"PostTags\")\n}\n\nmodel Like {\n  id        Int      @id @default(autoincrement())\n  userId    Int\n  postId    Int\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  user      User     @relation(fields: [userId], references: [id])\n  post      Post     @relation(fields: [postId], references: [id])\n}\n",
-  "inlineSchemaHash": "b96b857897135218aceb829fdc93296e142e1b2e79f7b2b7ff525fca8088f009",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\" // Thử điều chỉnh đường dẫn\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id        Int       @id @default(autoincrement())\n  name      String\n  email     String\n  bio       String?\n  avatar    String?\n  password  String?\n  createAt  DateTime  @default(now())\n  updatedAt DateTime  @updatedAt\n  posts     Post[]\n  comments  Comment[]\n  likes     Like[]\n}\n\nmodel Post {\n  id        Int       @id @default(autoincrement())\n  title     String\n  slug      String?   @unique\n  content   String\n  authorId  Int\n  thumbnail String?\n  published Boolean   @default(false)\n  createdAt DateTime  @default(now())\n  updatedAt DateTime  @updatedAt\n  author    User      @relation(fields: [authorId], references: [id])\n  comments  Comment[]\n  tags      Tag[]     @relation(\"PostTags\")\n  likes     Like[]\n}\n\nmodel Comment {\n  id        Int      @id @default(autoincrement())\n  content   String\n  authorId  Int\n  postId    Int\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  author    User     @relation(fields: [authorId], references: [id])\n  post      Post     @relation(fields: [postId], references: [id])\n}\n\nmodel Tag {\n  id    Int    @id @default(autoincrement())\n  name  String @unique\n  posts Post[] @relation(\"PostTags\")\n}\n\nmodel Like {\n  id        Int      @id @default(autoincrement())\n  userId    Int\n  postId    Int\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  user      User     @relation(fields: [userId], references: [id])\n  post      Post     @relation(fields: [postId], references: [id])\n}\n",
+  "inlineSchemaHash": "b27eb367e9090f57b36a451570e4caf448c150f53fd47f504b5c4b1172007940",
   "copyEngine": true
 }
 config.dirname = '/'

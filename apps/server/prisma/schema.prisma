@@ -14,7 +14,7 @@ datasource db {
 model User {
   id Int @id @default(autoincrement()) 
   name String
-  email String
+  email String @unique
   bio String?
   avatar String?
   password String?
@@ -26,8 +26,8 @@ model User {
 }
 model Post {
   id Int @id @default(autoincrement())
-  title String
   slug String? @unique
+  title String
   content String
   authorId Int
   thumbnail String?
