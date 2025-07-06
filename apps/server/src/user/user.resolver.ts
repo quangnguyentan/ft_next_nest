@@ -5,10 +5,10 @@ import { CreateUserInput } from './dto/create-user.input';
 
 @Resolver(() => User)
 export class UserResolver {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   @Mutation(() => User)
-  async createUser(@Args('CreateUserInput') createUserInput: CreateUserInput) {
+  async createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
     return await this.userService.create(createUserInput);
   }
 }
